@@ -2,10 +2,6 @@
 
 The **UIDAI Dashboard** is a data analytics and AI-based web application that helps understand population trends and service usage using UIDAI-related data.  
 It converts raw enrollment, demographic update, and biometric activity data into **clear insights and visual reports** that support better planning and decision-making.
-
- **Live Deployed Link (Hugging Face):**  
-https://the-rock1-uidai-dashboard.hf.space
-
 ---
 
 ##  Project Purpose
