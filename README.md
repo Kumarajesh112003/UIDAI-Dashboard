@@ -124,11 +124,3 @@ https://the-rock1-uidai-dashboard.hf.space
 You can explore the dashboard without installing anything.
 
 ---
-
-##  Run Locally 
-
-```bash
-git clone https://github.com/<your-username>/UIDAI-Dashboard.git
-cd UIDAI-Dashboard
-pip install -r requirements.txt
-streamlit run app.py
