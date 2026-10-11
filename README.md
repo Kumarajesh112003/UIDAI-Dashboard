@@ -119,7 +119,7 @@ UIDAI-Dashboard/
 The project is deployed and accessible online:
 
 🔗 **Live Dashboard:**  
-https://the-rock1-uidai-dashboard.hf.space
+https://uidai-dashboard-03.streamlit.app
 
 You can explore the dashboard without installing anything.
 
