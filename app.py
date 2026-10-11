@@ -52,6 +52,10 @@ st.markdown("""
     .action-title { color: #3FB950; font-weight: 700; font-size: 16px; margin-bottom: 15px; border-bottom: 1px solid rgba(46, 160, 67, 0.4); padding-bottom: 8px; }
     .stButton button { background: linear-gradient(90deg, #7C3AED, #5B21B6); color: white; border: none; font-weight: 600; width: 100%; }
     .spacer { height: 25px; }
+    .brand { display: flex; align-items: center; gap: 14px; padding: 18px 14px; border-radius: 12px; background: linear-gradient(135deg, rgba(88,166,255,0.16), rgba(163,113,247,0.16)); border: 1px solid #30363D; box-shadow: 0 4px 14px rgba(0,0,0,0.35); }
+    .brand-icon { width: 48px; height: 48px; flex: none; display: flex; align-items: center; justify-content: center; font-size: 26px; border-radius: 12px; background: linear-gradient(135deg, #58A6FF, #A371F7); box-shadow: 0 0 14px rgba(88,166,255,0.45); }
+    .brand-title { color: #E6EDF3; font-weight: 800; font-size: 17px; letter-spacing: 0.4px; line-height: 1.15; }
+    .brand-sub { color: #8B949E; font-size: 10.5px; letter-spacing: 1.4px; text-transform: uppercase; margin-top: 4px; }
     .highlight { color: #A5D6FF; font-weight: 600; }
 </style>
 """, unsafe_allow_html=True)
@@ -151,7 +155,15 @@ with st.spinner('System Boot: Loading & Cleaning Data...'):
     df_e, df_d, df_b = engineer_features(raw_e, raw_d, raw_b)
 
 # --- SIDEBAR ---
-st.sidebar.image("https://upload.wikimedia.org/wikipedia/en/thumb/c/cf/Aadhaar_Logo.svg/1200px-Aadhaar_Logo.svg.png", width=160)
+st.sidebar.markdown("""
+<div class='brand'>
+    <div class='brand-icon'>🛡️</div>
+    <div>
+        <div class='brand-title'>UIDAI Analytics</div>
+        <div class='brand-sub'>Command Center</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 st.sidebar.markdown("<div class='spacer'></div>", unsafe_allow_html=True)
 st.sidebar.header("FILTER DASHBOARD")
 
