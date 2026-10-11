@@ -1,8 +1,8 @@
-streamlit==1.45.0
-pandas==2.2.3
-numpy==1.26.4
-plotly==5.24.1
-scikit-learn==1.5.2
+streamlit<2
+pandas<3
+numpy
+plotly<6
+scikit-learn
 groq
-seaborn==0.13.2
-python-dotenv==1.0.1
+seaborn
+python-dotenv
