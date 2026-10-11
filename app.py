@@ -17,6 +17,11 @@ import re
 from dotenv import load_dotenv
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+try:
+    if not GROQ_API_KEY:
+        GROQ_API_KEY = st.secrets.get("GROQ_API_KEY", "")
+except Exception:
+    pass
 # ==========================================
 
 # --- PAGE CONFIGURATION ---
@@ -89,7 +94,7 @@ def generate_uidai_plan(topic, data_summary):
         completion = client.chat.completions.create(
             model="openai/gpt-oss-20b",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.5, max_tokens=300, top_p=1, stream=False, stop=None,
+            temperature=0.5, max_tokens=1500, top_p=1, stream=False, stop=None,
         )
         return completion.choices[0].message.content
     except Exception as e:

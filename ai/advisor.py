@@ -17,7 +17,7 @@ def generate_uidai_plan(topic, data_summary):
             model="openai/gpt-oss-20b",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.5,
-            max_tokens=300
+            max_tokens=1500
         )
         return completion.choices[0].message.content
     except Exception as e:
