@@ -42,13 +42,13 @@ def render(f_e, f_d, generate_uidai_plan):
                 },
                 template='plotly_dark', height=500
             ),
-            use_container_width=True
+            width='stretch'
         )
 
     with c_right:
         st.subheader("Top Migration Hubs")
         top = mig.nlargest(10, 'Score')[['state', 'district', 'Score']]
-        st.dataframe(top, hide_index=True, use_container_width=True)
+        st.dataframe(top, hide_index=True, width='stretch')
         run_ai = st.button("⚡ Generate AI Action Plan", key="ai_migration")
 
     if run_ai:

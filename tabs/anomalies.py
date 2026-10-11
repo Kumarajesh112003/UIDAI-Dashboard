@@ -38,7 +38,7 @@ def render(f_d, generate_uidai_plan):
                 title="Transaction Time Series",
                 template='plotly_dark', height=500
             ),
-            use_container_width=True
+            width='stretch'
         )
 
     with c_right:
@@ -46,7 +46,7 @@ def render(f_d, generate_uidai_plan):
             st.success("Operations stable.")
             return
 
-        st.dataframe(anoms.head(10), hide_index=True, use_container_width=True)
+        st.dataframe(anoms.head(10), hide_index=True, width='stretch')
         run_ai = st.button("⚡ Analyze Anomalies with AI", key="ai_anom")
 
     if run_ai:

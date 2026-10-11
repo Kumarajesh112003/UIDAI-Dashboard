@@ -102,7 +102,7 @@ def clean_state_names(df):
         df['state'] = df['state'].astype(str).str.strip().str.title()
         
         # Remove rows containing Digits (0-9) OR Question Marks (?)
-        df = df[~df['state'].str.contains(r'[\d?]', regex=True)]
+        df = df[~df['state'].str.contains(r'[\d?]', regex=True)].copy()
         
         # Fix Standard Spells
         replacements = {
@@ -122,7 +122,7 @@ def clean_state_names(df):
         df['district'] = df['district'].astype(str).str.strip().str.title()
         
         # Remove rows where District contains Digits OR '?'
-        df = df[~df['district'].str.contains(r'[\d?]', regex=True)]
+        df = df[~df['district'].str.contains(r'[\d?]', regex=True)].copy()
         
         # Remove empty or extremely short district names (garbage)
         df = df[df['district'].str.len() > 2]
@@ -254,13 +254,13 @@ with tabs[0]:
             st.plotly_chart(px.scatter(mig, x='total_enroll', y='total_updates', size='Score', color='Type', 
                              hover_name='district', hover_data=['state'], title="Migration Matrix", 
                              color_discrete_map={'Natural Growth': '#3FB950', 'Balanced': '#D29922', 'In-Migration': '#F85149'}, 
-                             template='plotly_dark', height=500), use_container_width=True)
+                             template='plotly_dark', height=500), width='stretch')
 
         # Right: Data & Actions
         with c_right:
             st.subheader("Top Migration Hubs")
             top = mig.nlargest(10, 'Score')[['state', 'district', 'Score']]
-            st.dataframe(top, hide_index=True, use_container_width=True)
+            st.dataframe(top, hide_index=True, width='stretch')
             st.markdown("---")
             run_ai = st.button("⚡ Generate AI Action Plan", key="ai_mig")
 
@@ -294,12 +294,12 @@ with tabs[1]:
             
             # Left: Chart
             with c_left: 
-                st.plotly_chart(px.bar(top, x='Aging_Index', y='district', orientation='h', title="Top Aging Districts", template='plotly_dark', height=500), use_container_width=True)
+                st.plotly_chart(px.bar(top, x='Aging_Index', y='district', orientation='h', title="Top Aging Districts", template='plotly_dark', height=500), width='stretch')
 
             # Right: Table
             with c_right:
                 st.subheader("High Aging Districts") 
-                st.dataframe(top, hide_index=True, use_container_width=True)
+                st.dataframe(top, hide_index=True, width='stretch')
                 st.markdown("---")
                 run_ai = st.button("⚡ Generate AI Action Plan", key="ai_demo")
 
@@ -329,12 +329,12 @@ with tabs[2]:
         
         # Left: Chart
         with c_left: 
-            st.plotly_chart(px.treemap(serv, path=['state', 'district'], values='total_bio', title="Service Volume Heatmap", template='plotly_dark', height=500), use_container_width=True)
+            st.plotly_chart(px.treemap(serv, path=['state', 'district'], values='total_bio', title="Service Volume Heatmap", template='plotly_dark', height=500), width='stretch')
 
         # Right: Table
         with c_right:
             st.subheader("Critical Service Gaps")
-            st.dataframe(top_low, hide_index=True, use_container_width=True)
+            st.dataframe(top_low, hide_index=True, width='stretch')
             st.markdown("---")
             run_ai = st.button("⚡ Generate AI Action Plan", key="ai_serv")
 
@@ -366,12 +366,12 @@ with tabs[3]:
             
             # Left: Chart
             with c_left: 
-                st.plotly_chart(px.bar(d_wk.nlargest(10, 'Score').reset_index(), x='Score', y='district', orientation='h', title="Digital Leaders", template='plotly_dark', height=500), use_container_width=True)
+                st.plotly_chart(px.bar(d_wk.nlargest(10, 'Score').reset_index(), x='Score', y='district', orientation='h', title="Digital Leaders", template='plotly_dark', height=500), width='stretch')
 
             # Right: Table
             with c_right:
                 st.subheader("Low Digital Adoption")
-                st.dataframe(low, hide_index=True, use_container_width=True)
+                st.dataframe(low, hide_index=True, width='stretch')
                 st.markdown("---")
                 run_ai = st.button("⚡ Generate AI Action Plan", key="ai_dig")
 
@@ -410,12 +410,12 @@ with tabs[4]:
             with c_left:
                 fig = go.Figure(go.Funnel(y = ["Infant Cohort", "Biometric Cohort"], x = [merged['Enrolled'].sum(), merged['Retained'].sum()], textinfo = "value+percent initial"))
                 fig.update_layout(title="Aggregate Retention Funnel", template='plotly_dark', height=500)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width='stretch')
 
             # Right: Table
             with c_right:
                 st.subheader("Critical Zones")
-                st.dataframe(critical, hide_index=True, use_container_width=True)
+                st.dataframe(critical, hide_index=True, width='stretch')
                 st.markdown("---")
                 run_ai = st.button("⚡ Generate AI Action Plan", key="ai_child")
 
@@ -451,13 +451,13 @@ with tabs[5]:
                 
                 # Left: Chart
                 with c_left: 
-                    st.plotly_chart(px.scatter(ts, x='date', y='total_updates', color=ts['anomaly'].astype(str), title="Volume Time Series", template='plotly_dark', height=500), use_container_width=True)
+                    st.plotly_chart(px.scatter(ts, x='date', y='total_updates', color=ts['anomaly'].astype(str), title="Volume Time Series", template='plotly_dark', height=500), width='stretch')
 
                 # Right: Table
                 with c_right:
                     st.subheader("Flagged Anomalies")
                     if not anoms.empty:
-                        st.dataframe(anoms.head(10), hide_index=True, use_container_width=True)
+                        st.dataframe(anoms.head(10), hide_index=True, width='stretch')
                         st.markdown("---")
                         run_ai = st.button("⚡ Analyze Anomalies with AI", key="ai_anom")
                     else: 

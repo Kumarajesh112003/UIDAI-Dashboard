@@ -33,10 +33,10 @@ def render(f_e, f_b, generate_uidai_plan):
             textinfo="value+percent initial"
         ))
         fig.update_layout(template='plotly_dark', height=500)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     with c_right:
-        st.dataframe(critical[['state', 'district', 'Rate']], hide_index=True, use_container_width=True)
+        st.dataframe(critical[['state', 'district', 'Rate']], hide_index=True, width='stretch')
         run_ai = st.button("⚡ Generate AI Action Plan", key="ai_child")
 
     if run_ai:

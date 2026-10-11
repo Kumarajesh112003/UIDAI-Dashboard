@@ -26,11 +26,11 @@ def render(f_b, generate_uidai_plan):
                 title="Service Volume Heatmap",
                 template='plotly_dark', height=500
             ),
-            use_container_width=True
+            width='stretch'
         )
 
     with c_right:
-        st.dataframe(low, hide_index=True, use_container_width=True)
+        st.dataframe(low, hide_index=True, width='stretch')
         run_ai = st.button("⚡ Generate AI Action Plan", key="ai_service")
 
     if run_ai:
