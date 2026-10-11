@@ -3,6 +3,11 @@
 .env.*
 !.env.example
 
+# Extracted data folders (zips below are the source of truth)
+data_enrolment/
+data_demographic/
+data_biometric/
+
 # Python
 __pycache__/
 *.py[cod]

@@ -87,7 +87,7 @@ def generate_uidai_plan(topic, data_summary):
         """
         
         completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-20b",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.5, max_tokens=300, top_p=1, stream=False, stop=None,
         )
