@@ -6,3 +6,4 @@ scikit-learn
 groq
 seaborn
 python-dotenv
+pyarrow<25
