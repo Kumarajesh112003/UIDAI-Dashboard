@@ -31,22 +31,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# --- UNZIP DATASETS (Run once on startup) ---
-def unzip_data(zip_name, extract_to):
-    if os.path.exists(zip_name):
-        with zipfile.ZipFile(zip_name, 'r') as zip_ref:
-            zip_ref.extractall(extract_to)
-        # print(f"Extracted {zip_name}") # Commented out for cleaner logs
-
-os.makedirs('./data_enrolment', exist_ok=True)
-os.makedirs('./data_demographic', exist_ok=True)
-os.makedirs('./data_biometric', exist_ok=True)
-
-# Ensure these zip files are uploaded to your Hugging Face Files tab!
-unzip_data('api_data_aadhar_enrolment.zip', './data_enrolment')
-unzip_data('api_data_aadhar_demographic.zip', './data_demographic')
-unzip_data('api_data_aadhar_biometric.zip', './data_biometric')
-
 # --- ENTERPRISE DARK THEME CSS ---
 st.markdown("""
 <style>
@@ -140,29 +124,14 @@ def clean_state_names(df):
 
     return df
 
+# Pre-aggregated per (date, state, district) by data/build_aggregates.py
 @st.cache_data
 def load_data():
-    def load_folder(path):
-        files = glob.glob(os.path.join(path, "**/*.csv"), recursive=True)
-        dfs = []
-        for f in files:
-            try: dfs.append(pd.read_csv(f))
-            except: pass
-        return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
+    def load_file(name):
+        path = os.path.join("data_agg", name)
+        return pd.read_parquet(path) if os.path.exists(path) else pd.DataFrame()
 
-    df_e, df_d, df_b = load_folder("./data_enrolment"), load_folder("./data_demographic"), load_folder("./data_biometric")
-    
-    for df in [df_e, df_d, df_b]:
-        if not df.empty:
-            df.columns = df.columns.str.lower().str.strip()
-            if 'date' in df.columns: df['date'] = pd.to_datetime(df['date'], format='%d-%m-%Y', errors='coerce')
-            cols = df.select_dtypes(include=np.number).columns
-            df[cols] = df[cols].fillna(0)
-            
-            # Apply Improved Cleaning
-            df = clean_state_names(df)
-            
-    return df_e, df_d, df_b
+    return load_file("enrolment.parquet"), load_file("demographic.parquet"), load_file("biometric.parquet")
 
 def engineer_features(df_e, df_d, df_b):
     if not df_e.empty:
