@@ -100,6 +100,12 @@ def generate_uidai_plan(topic, data_summary):
     except Exception as e:
         return f"AI Connection Error: {str(e)}"
 
+def _format_ai(text):
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
+    text = text.replace('\n', '<br>')
+    return text
+
 # --- ADVANCED DATA CLEANING ---
 def clean_state_names(df):
     # 1. Clean State Names
@@ -273,7 +279,7 @@ with tabs[0]:
         if run_ai:
             with st.spinner("AI Analyst is reviewing migration data..."):
                 ai_response = generate_uidai_plan("Migration Patterns", top.to_string())
-                st.markdown(f"""<div class='ai-box'><div class='ai-header'>AI STRATEGIC ADVISORY</div>{ai_response}</div>""", unsafe_allow_html=True)
+                st.markdown(f"""<div class='ai-box'><div class='ai-header'>AI STRATEGIC ADVISORY</div>{_format_ai(ai_response)}</div>""", unsafe_allow_html=True)
 
 # === TAB 2: DEMOGRAPHICS ===
 with tabs[1]:
@@ -311,7 +317,7 @@ with tabs[1]:
             if run_ai:
                 with st.spinner("AI Analyst is reviewing demographics..."):
                     ai_response = generate_uidai_plan("Demographic Aging", top.to_string())
-                    st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{ai_response}</div>""", unsafe_allow_html=True)
+                    st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{_format_ai(ai_response)}</div>""", unsafe_allow_html=True)
 
 # === TAB 3: SERVICE DELIVERY ===
 with tabs[2]:
@@ -346,7 +352,7 @@ with tabs[2]:
         if run_ai:
             with st.spinner("AI Analyst is identifying service gaps..."):
                 ai_response = generate_uidai_plan("Service Delivery Gaps", top_low.to_string())
-                st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{ai_response}</div>""", unsafe_allow_html=True)
+                st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{_format_ai(ai_response)}</div>""", unsafe_allow_html=True)
 
 # === TAB 4: DIGITAL ADOPTION ===
 with tabs[3]:
@@ -383,7 +389,7 @@ with tabs[3]:
             if run_ai:
                 with st.spinner("AI Analyst is reviewing digital trends..."):
                     ai_response = generate_uidai_plan("Digital Literacy", low.to_string())
-                    st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{ai_response}</div>""", unsafe_allow_html=True)
+                    st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{_format_ai(ai_response)}</div>""", unsafe_allow_html=True)
 
 # === TAB 5: CHILD WELFARE ===
 with tabs[4]:
@@ -427,7 +433,7 @@ with tabs[4]:
             if run_ai:
                 with st.spinner("AI Analyst is reviewing child welfare data..."):
                     ai_response = generate_uidai_plan("Child Retention & Welfare", critical.to_string())
-                    st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{ai_response}</div>""", unsafe_allow_html=True)
+                    st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{_format_ai(ai_response)}</div>""", unsafe_allow_html=True)
 
 # === TAB 6: ANOMALIES ===
 with tabs[5]:
@@ -472,4 +478,4 @@ with tabs[5]:
                 if run_ai and not anoms.empty:
                     with st.spinner("AI is investigating anomalies..."):
                         ai_response = generate_uidai_plan("Operational Anomalies", anoms.to_string())
-                        st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{ai_response}</div>""", unsafe_allow_html=True)
+                        st.markdown(f"""<div class='ai-box'><div class='ai-header'>🤖 AI STRATEGIC ADVISORY</div>{_format_ai(ai_response)}</div>""", unsafe_allow_html=True)
